@@ -292,6 +292,33 @@
       outline: none;
     }
     .um-input:focus { border-color: #9d6b3a; }
+    .um-perm {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .um-perm-label {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-mid);
+      cursor: pointer;
+      background: var(--warm);
+      border-radius: 6px;
+      padding: 4px 7px;
+      border: 1.5px solid transparent;
+      transition: .15s;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .um-perm-label:has(input:checked) {
+      border-color: var(--gold);
+      background: #fff8ee;
+      color: var(--brown);
+    }
+    .um-perm-label input { width: 13px; height: 13px; accent-color: var(--gold); cursor: pointer; }
     .um-save-btn {
       margin-top: 10px;
       padding: 10px 28px;
@@ -825,12 +852,17 @@
     const users = getUsers('ta');
     const match = users.find(x => x.u === u && x.p === p);
     if (match) {
+      const role = match.role || 'input';
       document.getElementById('taLogin').style.display = 'none';
       const fd = document.getElementById('taFrame');
       fd.style.display = 'flex';
-      document.getElementById('taWelcome').textContent = '👋 歡迎，' + u;
+      document.getElementById('taWelcome').textContent = '👋 歡迎，' + u + roleTag(role);
       const iframe = document.getElementById('taIframe');
-      if (!iframe.src) iframe.src = 'https://script.google.com/macros/s/AKfycbzBHEndqfatexVF5ZgDQDwH8yWJorcxclbtvCSxvXyxZCFDjrNbAHmIPTWzUX322uNr/exec';
+      // 後台或兩者 → 後台 URL；否則 → 輸入 URL
+      const src = (role === 'admin' || role === 'both')
+        ? 'https://script.google.com/macros/s/AKfycbzBHEndqfatexVF5ZgDQDwH8yWJorcxclbtvCSxvXyxZCFDjrNbAHmIPTWzUX322uNr/exec?page=admin'
+        : 'https://script.google.com/macros/s/AKfycbzBHEndqfatexVF5ZgDQDwH8yWJorcxclbtvCSxvXyxZCFDjrNbAHmIPTWzUX322uNr/exec';
+      if (!iframe.src || iframe.src === 'about:blank') iframe.src = src;
       err.textContent = '';
     } else {
       err.textContent = '❌ 帳號或密碼錯誤，請再試一次';
@@ -843,6 +875,8 @@
     document.getElementById('taUser').value = '';
     document.getElementById('taPass').value = '';
     document.getElementById('taError').textContent = '';
+    const iframe = document.getElementById('taIframe');
+    iframe.src = 'about:blank';
   }
 
   // ── 莊敬校工作輸入 登入 / 登出 ──
@@ -853,12 +887,16 @@
     const users = getUsers('zj');
     const match = users.find(x => x.u === u && x.p === p);
     if (match) {
+      const role = match.role || 'input';
       document.getElementById('zjLogin').style.display = 'none';
       const fd = document.getElementById('zjFrame');
       fd.style.display = 'flex';
-      document.getElementById('zjWelcome').textContent = '👋 歡迎，' + u;
+      document.getElementById('zjWelcome').textContent = '👋 歡迎，' + u + roleTag(role);
       const iframe = document.getElementById('zjIframe');
-      if (!iframe.src) iframe.src = 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec';
+      const src = (role === 'admin' || role === 'both')
+        ? 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec?page=admin'
+        : 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec';
+      if (!iframe.src || iframe.src === 'about:blank') iframe.src = src;
       err.textContent = '';
     } else {
       err.textContent = '❌ 帳號或密碼錯誤，請再試一次';
@@ -871,6 +909,14 @@
     document.getElementById('zjUser').value = '';
     document.getElementById('zjPass').value = '';
     document.getElementById('zjError').textContent = '';
+    const iframe = document.getElementById('zjIframe');
+    iframe.src = 'about:blank';
+  }
+
+  function roleTag(role) {
+    if (role === 'admin') return '　【後台】';
+    if (role === 'both')  return '　【輸入＋後台】';
+    return '　【工作輸入】';
   }
 
   // ── 後台：同安校管理員登入 ──
@@ -939,15 +985,25 @@
     const users = getUsers(school);
     let rows = '';
     for (let i = 0; i < MAX_USERS; i++) {
-      const u = users[i] ? users[i].u : '';
-      const p = users[i] ? users[i].p : '';
+      const usr = users[i] || {};
+      const u = usr.u || '';
+      const p = usr.p || '';
+      const roleInput  = usr.role === 'input'  || (!usr.role && false);
+      const roleAdmin  = usr.role === 'admin';
+      const roleBoth   = usr.role === 'both'   || (!usr.role && !!u);
       rows += `<div class="um-row">
         <span class="um-num">${i+1}</span>
-        <input class="um-input" id="um_u_${school}_${i}" type="text" placeholder="帳號" value="${u}">
-        <input class="um-input" id="um_p_${school}_${i}" type="password" placeholder="密碼" value="${p}">
+        <input class="um-input" id="um_u_${school}_${i}" type="text" placeholder="帳號" value="${u}" style="max-width:120px;">
+        <input class="um-input" id="um_p_${school}_${i}" type="password" placeholder="密碼" value="${p}" style="max-width:120px;">
+        <div class="um-perm">
+          <label class="um-perm-label"><input type="radio" name="role_${school}_${i}" id="r_input_${school}_${i}" value="input" ${roleInput?'checked':''}> 輸入</label>
+          <label class="um-perm-label"><input type="radio" name="role_${school}_${i}" id="r_admin_${school}_${i}" value="admin" ${roleAdmin?'checked':''}> 後台</label>
+          <label class="um-perm-label"><input type="radio" name="role_${school}_${i}" id="r_both_${school}_${i}"  value="both"  ${roleBoth?'checked':''}> 兩者</label>
+        </div>
       </div>`;
     }
     return `<div class="um-title">⚙️ ${label} 使用者帳密管理（最多10組）</div>
+      <div style="font-size:11px;color:var(--text-light);margin-bottom:8px;padding-left:30px;">輸入＝每月工作輸入　後台＝後台系統　兩者＝皆可</div>
       ${rows}
       <hr class="um-divider">
       <button class="um-save-btn ${btnClass}" onclick="saveUM('${school}')">儲　存</button>
@@ -959,7 +1015,9 @@
     for (let i = 0; i < MAX_USERS; i++) {
       const u = (document.getElementById(`um_u_${school}_${i}`)?.value || '').trim();
       const p = (document.getElementById(`um_p_${school}_${i}`)?.value || '').trim();
-      if (u && p) arr.push({ u, p });
+      const roleEl = document.querySelector(`input[name="role_${school}_${i}"]:checked`);
+      const role = roleEl ? roleEl.value : 'input';
+      if (u && p) arr.push({ u, p, role });
     }
     saveUsers(school, arr);
     const ok = document.getElementById('um_ok_' + school);
