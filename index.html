@@ -856,7 +856,7 @@
       document.getElementById('taLogin').style.display = 'none';
       const fd = document.getElementById('taFrame');
       fd.style.display = 'flex';
-      document.getElementById('taWelcome').textContent = '👋 歡迎，' + u + roleTag(role);
+      document.getElementById('taWelcome').textContent = '👋 歡迎，' + (match.n || u) + roleTag(role);
       const iframe = document.getElementById('taIframe');
       // 後台或兩者 → 後台 URL；否則 → 輸入 URL
       const src = (role === 'admin' || role === 'both')
@@ -891,7 +891,7 @@
       document.getElementById('zjLogin').style.display = 'none';
       const fd = document.getElementById('zjFrame');
       fd.style.display = 'flex';
-      document.getElementById('zjWelcome').textContent = '👋 歡迎，' + u + roleTag(role);
+      document.getElementById('zjWelcome').textContent = '👋 歡迎，' + (match.n || u) + roleTag(role);
       const iframe = document.getElementById('zjIframe');
       const src = (role === 'admin' || role === 'both')
         ? 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec?page=admin'
@@ -988,13 +988,15 @@
       const usr = users[i] || {};
       const u = usr.u || '';
       const p = usr.p || '';
+      const n = usr.n || '';
       const roleInput  = usr.role === 'input'  || (!usr.role && false);
       const roleAdmin  = usr.role === 'admin';
       const roleBoth   = usr.role === 'both'   || (!usr.role && !!u);
       rows += `<div class="um-row">
         <span class="um-num">${i+1}</span>
-        <input class="um-input" id="um_u_${school}_${i}" type="text" placeholder="帳號" value="${u}" style="max-width:120px;">
-        <input class="um-input" id="um_p_${school}_${i}" type="password" placeholder="密碼" value="${p}" style="max-width:120px;">
+        <input class="um-input" id="um_n_${school}_${i}" type="text" placeholder="姓名" value="${n}" style="max-width:80px;">
+        <input class="um-input" id="um_u_${school}_${i}" type="text" placeholder="帳號" value="${u}" style="max-width:100px;">
+        <input class="um-input" id="um_p_${school}_${i}" type="password" placeholder="密碼" value="${p}" style="max-width:100px;">
         <div class="um-perm">
           <label class="um-perm-label"><input type="radio" name="role_${school}_${i}" id="r_input_${school}_${i}" value="input" ${roleInput?'checked':''}> 輸入</label>
           <label class="um-perm-label"><input type="radio" name="role_${school}_${i}" id="r_admin_${school}_${i}" value="admin" ${roleAdmin?'checked':''}> 後台</label>
@@ -1013,11 +1015,12 @@
   function saveUM(school) {
     const arr = [];
     for (let i = 0; i < MAX_USERS; i++) {
+      const n = (document.getElementById(`um_n_${school}_${i}`)?.value || '').trim();
       const u = (document.getElementById(`um_u_${school}_${i}`)?.value || '').trim();
       const p = (document.getElementById(`um_p_${school}_${i}`)?.value || '').trim();
       const roleEl = document.querySelector(`input[name="role_${school}_${i}"]:checked`);
       const role = roleEl ? roleEl.value : 'input';
-      if (u && p) arr.push({ u, p, role });
+      if (u && p) arr.push({ n, u, p, role });
     }
     saveUsers(school, arr);
     const ok = document.getElementById('um_ok_' + school);
