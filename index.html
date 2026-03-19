@@ -582,6 +582,40 @@
       letter-spacing: 1px;
       flex-shrink: 0;
     }
+
+    /* ── FULLSCREEN TOOLBAR ── */
+    .fs-toolbar {
+      display: flex;
+      align-items: center;
+      padding: 5px 14px;
+      background: #fff;
+      border-bottom: 1px solid #e8dcc8;
+      flex-shrink: 0;
+    }
+    .fs-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-mid);
+      user-select: none;
+    }
+    .fs-label input[type=checkbox] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+    /* Fullscreen mode */
+    body.fs-mode .hero,
+    body.fs-mode .nav,
+    body.fs-mode .divider,
+    body.fs-mode .tabs,
+    body.fs-mode .footer { display: none !important; }
+    body.fs-mode .main { position: fixed; inset: 0; z-index: 100; background: var(--cream); }
+    body.fs-mode .fs-toolbar { position: relative; z-index: 101; }
   </style>
 </head>
 <body>
@@ -685,6 +719,9 @@
 
       <!-- 同安校每月工作輸入 -->
       <div class="spanel active" id="spanel0">
+        <div class="fs-toolbar">
+          <label class="fs-label"><input type="checkbox" id="fscb0" onchange="toggleFS(this)"> 全螢幕</label>
+        </div>
 
         <!-- Login -->
         <div class="login-screen" id="taLogin">
@@ -724,6 +761,9 @@
 
       <!-- 莊敬校每月工作輸入 -->
       <div class="spanel" id="spanel1">
+        <div class="fs-toolbar">
+          <label class="fs-label"><input type="checkbox" id="fscb1" onchange="toggleFS(this)"> 全螢幕</label>
+        </div>
 
         <!-- Login -->
         <div class="login-screen" id="zjLogin">
@@ -763,6 +803,9 @@
 
       <!-- 同安校後台 -->
       <div class="spanel" id="spanel2">
+        <div class="fs-toolbar">
+          <label class="fs-label"><input type="checkbox" id="fscb2" onchange="toggleFS(this)"> 全螢幕</label>
+        </div>
         <div class="login-screen" id="adminLogin">
           <div class="login-card">
             <div class="login-deco">🔐 管理員專區</div>
@@ -791,6 +834,9 @@
 
       <!-- 莊敬校後台 -->
       <div class="spanel" id="spanel3">
+        <div class="fs-toolbar">
+          <label class="fs-label"><input type="checkbox" id="fscb3" onchange="toggleFS(this)"> 全螢幕</label>
+        </div>
         <div class="login-screen" id="adminLogin2">
           <div class="login-card">
             <div class="login-deco">🔑 管理員專區</div>
@@ -859,9 +905,7 @@
       document.getElementById('taWelcome').textContent = '👋 歡迎，' + (match.n || u) + roleTag(role);
       const iframe = document.getElementById('taIframe');
       // 後台或兩者 → 後台 URL；否則 → 輸入 URL
-      const src = (role === 'admin' || role === 'both')
-        ? 'https://script.google.com/macros/s/AKfycbzBHEndqfatexVF5ZgDQDwH8yWJorcxclbtvCSxvXyxZCFDjrNbAHmIPTWzUX322uNr/exec?page=admin'
-        : 'https://script.google.com/macros/s/AKfycbzBHEndqfatexVF5ZgDQDwH8yWJorcxclbtvCSxvXyxZCFDjrNbAHmIPTWzUX322uNr/exec';
+      const src = 'https://script.google.com/macros/s/AKfycbzBHEndqfatexVF5ZgDQDwH8yWJorcxclbtvCSxvXyxZCFDjrNbAHmIPTWzUX322uNr/exec';
       if (!iframe.src || iframe.src === 'about:blank') iframe.src = src;
       err.textContent = '';
     } else {
@@ -893,9 +937,7 @@
       fd.style.display = 'flex';
       document.getElementById('zjWelcome').textContent = '👋 歡迎，' + (match.n || u) + roleTag(role);
       const iframe = document.getElementById('zjIframe');
-      const src = (role === 'admin' || role === 'both')
-        ? 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec?page=admin'
-        : 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec';
+      const src = 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec';
       if (!iframe.src || iframe.src === 'about:blank') iframe.src = src;
       err.textContent = '';
     } else {
@@ -924,12 +966,27 @@
     const u = document.getElementById('adminUser').value.trim();
     const p = document.getElementById('adminPass').value;
     const err = document.getElementById('loginError');
+    // 超級管理員
     if (u === ADMIN_U && p === ADMIN_P) {
       document.getElementById('adminLogin').style.display = 'none';
       showAdminPanel('ta');
       err.textContent = '';
+      return;
+    }
+    // 有後台權限的一般使用者
+    const users = getUsers('ta');
+    const match = users.find(x => x.u === u && x.p === p && (x.role === 'admin' || x.role === 'both'));
+    if (match) {
+      document.getElementById('adminLogin').style.display = 'none';
+      const frame = document.getElementById('adminFrame');
+      frame.style.display = 'flex';
+      const iframe = document.getElementById('adminIframe');
+      if (!iframe.src || iframe.src === 'about:blank') {
+        iframe.src = 'https://script.google.com/macros/s/AKfycbzBHEndqfatexVF5ZgDQDwH8yWJorcxclbtvCSxvXyxZCFDjrNbAHmIPTWzUX322uNr/exec?page=admin';
+      }
+      err.textContent = '';
     } else {
-      err.textContent = '❌ 帳號或密碼錯誤，請再試一次';
+      err.textContent = '❌ 帳號或密碼錯誤，或無後台權限';
       document.getElementById('adminPass').value = '';
     }
   }
@@ -939,12 +996,27 @@
     const u = document.getElementById('adminUser2').value.trim();
     const p = document.getElementById('adminPass2').value;
     const err = document.getElementById('loginError2');
+    // 超級管理員
     if (u === ADMIN_U && p === ADMIN_P) {
       document.getElementById('adminLogin2').style.display = 'none';
       showAdminPanel('zj');
       err.textContent = '';
+      return;
+    }
+    // 有後台權限的一般使用者
+    const users = getUsers('zj');
+    const match = users.find(x => x.u === u && x.p === p && (x.role === 'admin' || x.role === 'both'));
+    if (match) {
+      document.getElementById('adminLogin2').style.display = 'none';
+      const frame = document.getElementById('adminFrame2');
+      frame.style.display = 'flex';
+      const iframe = document.getElementById('adminIframe2');
+      if (!iframe.src || iframe.src === 'about:blank') {
+        iframe.src = 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec?page=admin';
+      }
+      err.textContent = '';
     } else {
-      err.textContent = '❌ 帳號或密碼錯誤，請再試一次';
+      err.textContent = '❌ 帳號或密碼錯誤，或無後台權限';
       document.getElementById('adminPass2').value = '';
     }
   }
@@ -1028,8 +1100,22 @@
     setTimeout(() => { ok.textContent = ''; }, 3000);
   }
 
-  // Enter key
+  // ── 全螢幕 ──
+  function toggleFS(cb) {
+    const on = cb.checked;
+    document.body.classList.toggle('fs-mode', on);
+    // uncheck all other checkboxes
+    document.querySelectorAll('.fs-label input[type=checkbox]').forEach(el => {
+      if (el !== cb) el.checked = false;
+    });
+  }
+  // ESC to exit fullscreen
   document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.body.classList.contains('fs-mode')) {
+      document.body.classList.remove('fs-mode');
+      document.querySelectorAll('.fs-label input[type=checkbox]').forEach(el => el.checked = false);
+      return;
+    }
     if (e.key !== 'Enter') return;
     const active = document.querySelector('.spanel.active');
     if (!active) return;
