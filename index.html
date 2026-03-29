@@ -21,9 +21,7 @@
       --gold: #c9922a;
       --red-accent: #c0392b;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Noto Sans TC', sans-serif;
       background: var(--cream);
@@ -33,160 +31,11 @@
       overflow-x: hidden;
     }
 
-    /* ── HERO HEADER ── */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: 220px;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    /* Sky gradient */
-    .sky {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 55%, var(--sky-bottom) 100%);
-    }
-
-    /* Clouds */
-    .cloud {
-      position: absolute;
-      background: #fff;
-      border-radius: 50px;
-      opacity: 0.88;
-      filter: blur(1px);
-    }
-    .cloud::before, .cloud::after {
-      content: '';
-      position: absolute;
-      background: #fff;
-      border-radius: 50%;
-    }
-    .c1 { width: 110px; height: 34px; top: 28px; left: 6%; animation: drift 28s linear infinite; }
-    .c1::before { width: 52px; height: 52px; top: -26px; left: 14px; }
-    .c1::after  { width: 38px; height: 38px; top: -18px; left: 48px; }
-
-    .c2 { width: 80px; height: 24px; top: 52px; left: 38%; animation: drift 38s linear infinite 8s; }
-    .c2::before { width: 40px; height: 40px; top: -20px; left: 10px; }
-    .c2::after  { width: 28px; height: 28px; top: -12px; left: 36px; }
-
-    .c3 { width: 140px; height: 38px; top: 18px; left: 68%; animation: drift 46s linear infinite 3s; }
-    .c3::before { width: 60px; height: 60px; top: -32px; left: 18px; }
-    .c3::after  { width: 44px; height: 44px; top: -22px; left: 60px; }
-
-    @keyframes drift { from { transform: translateX(0); } to { transform: translateX(-110vw); } }
-
-    /* Rolling hills */
-    .hills {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100px;
-    }
-    .hill {
-      position: absolute;
-      bottom: 0;
-      border-radius: 50% 50% 0 0;
-    }
-    .hill1 { width: 55%; height: 80px; left: -5%; background: var(--grass); }
-    .hill2 { width: 45%; height: 65px; left: 30%; background: #4e8f63; }
-    .hill3 { width: 50%; height: 55px; left: 58%; background: var(--grass); }
-    .hill4 { width: 30%; height: 45px; left: 75%; background: #3d7a50; }
-
-    /* Trees (simple Ghibli silhouettes) */
-    .tree {
-      position: absolute;
-      bottom: 0;
-    }
-    .tree .trunk {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #5c3d1e;
-      border-radius: 3px;
-    }
-    .tree .top {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 50% 50% 40% 40%;
-      background: #2d6a44;
-    }
-    .tree .top2 {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 50% 50% 40% 40%;
-      background: #3a8255;
-    }
-    /* tree instances */
-    .t1 { left: 4%; }
-    .t1 .trunk { width: 8px; height: 28px; }
-    .t1 .top  { width: 36px; height: 44px; bottom: 26px; }
-    .t1 .top2 { width: 28px; height: 34px; bottom: 54px; }
-
-    .t2 { left: 12%; }
-    .t2 .trunk { width: 6px; height: 20px; }
-    .t2 .top  { width: 28px; height: 36px; bottom: 18px; }
-    .t2 .top2 { width: 20px; height: 26px; bottom: 40px; }
-
-    .t3 { left: 82%; }
-    .t3 .trunk { width: 9px; height: 32px; }
-    .t3 .top  { width: 42px; height: 50px; bottom: 30px; }
-    .t3 .top2 { width: 32px; height: 38px; bottom: 64px; }
-
-    .t4 { left: 90%; }
-    .t4 .trunk { width: 6px; height: 22px; }
-    .t4 .top  { width: 30px; height: 38px; bottom: 20px; }
-    .t4 .top2 { width: 22px; height: 28px; bottom: 44px; }
-
-    /* Teacher character SVG area */
-    .teacher-wrap {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 10;
-    }
-
-    .teacher-label {
-      background: rgba(255,255,255,0.85);
-      border: 2px solid var(--brown);
-      border-radius: 20px;
-      padding: 3px 14px;
-      font-family: 'Noto Serif TC', serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--brown);
-      margin-bottom: 4px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-      white-space: nowrap;
-    }
-
-    /* Ghibli teacher SVG */
-    .teacher-svg {
-      width: 90px;
-      height: 110px;
-      filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
-      animation: teacher-sway 4s ease-in-out infinite;
-    }
-    @keyframes teacher-sway {
-      0%, 100% { transform: rotate(-1deg); }
-      50% { transform: rotate(1.5deg); }
-    }
-
     /* ── NAV BAR ── */
     .nav {
       background: var(--brown);
       background: linear-gradient(90deg, #6b4f2e 0%, #8b6f47 50%, #6b4f2e 100%);
-      padding: 10px 24px;
+      padding: 14px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -197,14 +46,11 @@
     }
     .nav-title {
       font-family: 'Noto Serif TC', serif;
-      font-size: 17px;
+      font-size: 22px;
       font-weight: 700;
       color: #fef3dc;
       letter-spacing: 2px;
       text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-    }
-    .nav-badge {
-      display: none;
     }
 
     /* ── TABS ── */
@@ -216,11 +62,11 @@
     }
     .stab {
       flex: 1;
-      padding: 11px 0;
+      padding: 14px 0;
       text-align: center;
       cursor: pointer;
       font-family: 'Noto Serif TC', serif;
-      font-size: 15px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--text-light);
       border-bottom: 3px solid transparent;
@@ -258,7 +104,7 @@
     }
     .um-title {
       font-family: 'Noto Serif TC', serif;
-      font-size: 14px;
+      font-size: 17px;
       font-weight: 700;
       color: var(--text-mid);
       margin-bottom: 12px;
@@ -273,7 +119,7 @@
       margin-bottom: 8px;
     }
     .um-num {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--text-light);
       width: 22px;
@@ -282,10 +128,10 @@
     }
     .um-input {
       flex: 1;
-      padding: 7px 10px;
+      padding: 8px 10px;
       border: 1.5px solid var(--warm);
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 15px;
       font-family: 'Noto Sans TC', sans-serif;
       color: var(--text-dark);
       background: var(--cream);
@@ -301,13 +147,13 @@
       display: flex;
       align-items: center;
       gap: 3px;
-      font-size: 11px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--text-mid);
       cursor: pointer;
       background: var(--warm);
       border-radius: 6px;
-      padding: 4px 7px;
+      padding: 5px 9px;
       border: 1.5px solid transparent;
       transition: .15s;
       user-select: none;
@@ -318,16 +164,16 @@
       background: #fff8ee;
       color: var(--brown);
     }
-    .um-perm-label input { width: 13px; height: 13px; accent-color: var(--gold); cursor: pointer; }
+    .um-perm-label input { width: 14px; height: 14px; accent-color: var(--gold); cursor: pointer; }
     .um-save-btn {
       margin-top: 10px;
-      padding: 10px 28px;
+      padding: 12px 32px;
       border: none;
       border-radius: 10px;
       background: linear-gradient(135deg, #2a6040 0%, #3d8258 100%);
       color: #fef3dc;
       font-family: 'Noto Serif TC', serif;
-      font-size: 14px;
+      font-size: 17px;
       font-weight: 700;
       letter-spacing: 2px;
       cursor: pointer;
@@ -338,10 +184,10 @@
       background: linear-gradient(135deg, #7c2d12 0%, #a84332 100%);
     }
     .um-ok {
-      font-size: 12px;
+      font-size: 14px;
       color: #2a6040;
       font-weight: 700;
-      min-height: 18px;
+      min-height: 20px;
       margin-top: 6px;
     }
     .um-divider {
@@ -350,12 +196,12 @@
       margin: 14px 0;
     }
     .logout-btn {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--text-light);
       background: none;
       border: 1px solid #c9a96e;
       border-radius: 999px;
-      padding: 3px 14px;
+      padding: 4px 16px;
       cursor: pointer;
       font-family: 'Noto Sans TC', sans-serif;
       margin-left: auto;
@@ -384,26 +230,26 @@
         0 0 0 5px #e8d5b0,
         0 12px 40px rgba(0,0,0,0.13);
       width: 100%;
-      max-width: 360px;
+      max-width: 400px;
       display: flex;
       flex-direction: column;
       gap: 18px;
       position: relative;
     }
     .login-icon {
-      font-size: 40px;
+      font-size: 44px;
       text-align: center;
     }
     .login-title {
       font-family: 'Noto Serif TC', serif;
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--text-dark);
       text-align: center;
       letter-spacing: 2px;
     }
     .login-sub {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--text-light);
       text-align: center;
       letter-spacing: 1px;
@@ -415,16 +261,16 @@
       gap: 6px;
     }
     .login-label {
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--text-mid);
       letter-spacing: 1px;
     }
     .login-input {
-      padding: 10px 14px;
+      padding: 12px 14px;
       border: 1.5px solid var(--warm);
       border-radius: 10px;
-      font-size: 14px;
+      font-size: 17px;
       font-family: 'Noto Sans TC', sans-serif;
       color: var(--text-dark);
       background: var(--cream);
@@ -433,13 +279,13 @@
     }
     .login-input:focus { border-color: #9d6b3a; }
     .login-btn {
-      padding: 12px;
+      padding: 14px;
       border: none;
       border-radius: 12px;
       background: linear-gradient(135deg, #6b4f2e 0%, #9d6b3a 100%);
       color: #fef3dc;
       font-family: 'Noto Serif TC', serif;
-      font-size: 15px;
+      font-size: 18px;
       font-weight: 700;
       letter-spacing: 2px;
       cursor: pointer;
@@ -449,10 +295,10 @@
     .login-btn:hover { opacity: 0.88; transform: translateY(-1px); }
     .login-btn:active { transform: translateY(0); }
     .login-error {
-      font-size: 12px;
+      font-size: 14px;
       color: #c0392b;
       text-align: center;
-      min-height: 16px;
+      min-height: 18px;
       font-weight: 600;
     }
     .login-deco {
@@ -461,8 +307,8 @@
       background: var(--warm);
       border: 2px solid #c9a96e;
       border-radius: 999px;
-      padding: 4px 18px;
-      font-size: 11px;
+      padding: 5px 20px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--brown);
       letter-spacing: 1px;
@@ -524,7 +370,6 @@
       background: #fff;
       min-height: 400px;
     }
-
     .frame-corner {
       position: absolute;
       width: 20px;
@@ -536,7 +381,6 @@
     .fc-tr { top: 6px; right: 6px; border-top: 3px solid var(--gold); border-right: 3px solid var(--gold); border-radius: 0 4px 0 0; }
     .fc-bl { bottom: 6px; left: 6px; border-bottom: 3px solid var(--gold); border-left: 3px solid var(--gold); border-radius: 0 0 0 4px; }
     .fc-br { bottom: 6px; right: 6px; border-bottom: 3px solid var(--gold); border-right: 3px solid var(--gold); border-radius: 0 0 4px 0; }
-
     .loading {
       position: absolute;
       inset: 0;
@@ -552,7 +396,7 @@
     .loading.done { opacity: 0; pointer-events: none; }
     .loading-text {
       font-family: 'Noto Serif TC', serif;
-      font-size: 13px;
+      font-size: 15px;
       color: var(--text-light);
       letter-spacing: 2px;
     }
@@ -565,7 +409,6 @@
       animation: spin .9s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     iframe {
       width: 100%;
       height: 100%;
@@ -577,7 +420,7 @@
     .footer {
       text-align: center;
       padding: 8px;
-      font-size: 11px;
+      font-size: 13px;
       color: var(--text-light);
       letter-spacing: 1px;
       flex-shrink: 0;
@@ -587,7 +430,7 @@
     .fs-toolbar {
       display: flex;
       align-items: center;
-      padding: 5px 14px;
+      padding: 6px 14px;
       background: #fff;
       border-bottom: 1px solid #e8dcc8;
       flex-shrink: 0;
@@ -597,19 +440,19 @@
       align-items: center;
       gap: 6px;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text-mid);
       user-select: none;
     }
     .fs-label input[type=checkbox] {
-      width: 16px;
-      height: 16px;
+      width: 17px;
+      height: 17px;
       accent-color: var(--gold);
       cursor: pointer;
     }
+
     /* Fullscreen mode */
-    body.fs-mode .hero,
     body.fs-mode .nav,
     body.fs-mode .divider,
     body.fs-mode .tabs,
@@ -619,84 +462,6 @@
   </style>
 </head>
 <body>
-
-  <!-- HERO -->
-  <div class="hero">
-    <div class="sky"></div>
-    <!-- Clouds -->
-    <div class="cloud c1"></div>
-    <div class="cloud c2"></div>
-    <div class="cloud c3"></div>
-    <!-- Hills -->
-    <div class="hills">
-      <div class="hill hill1"></div>
-      <div class="hill hill2"></div>
-      <div class="hill hill3"></div>
-      <div class="hill hill4"></div>
-    </div>
-    <!-- Trees -->
-    <div class="tree t1"><div class="trunk"></div><div class="top"></div><div class="top2"></div></div>
-    <div class="tree t2"><div class="trunk"></div><div class="top"></div><div class="top2"></div></div>
-    <div class="tree t3"><div class="trunk"></div><div class="top"></div><div class="top2"></div></div>
-    <div class="tree t4"><div class="trunk"></div><div class="top"></div><div class="top2"></div></div>
-    <!-- Teacher Character -->
-    <div class="teacher-wrap">
-      <!-- Ghibli-style teacher SVG -->
-      <svg class="teacher-svg" viewBox="0 0 90 110" xmlns="http://www.w3.org/2000/svg">
-        <!-- Shadow -->
-        <ellipse cx="45" cy="108" rx="22" ry="4" fill="rgba(0,0,0,0.15)"/>
-        <!-- Legs -->
-        <rect x="33" y="82" width="10" height="22" rx="5" fill="#3a5fa8"/>
-        <rect x="47" y="82" width="10" height="22" rx="5" fill="#3a5fa8"/>
-        <!-- Shoes -->
-        <ellipse cx="38" cy="104" rx="8" ry="5" fill="#2c2018"/>
-        <ellipse cx="52" cy="104" rx="8" ry="5" fill="#2c2018"/>
-        <!-- Dress/skirt -->
-        <path d="M24 62 Q30 90 38 92 Q45 94 52 92 Q60 90 66 62 Z" fill="#4a7fb5"/>
-        <!-- Body -->
-        <rect x="28" y="38" width="34" height="32" rx="10" fill="#4a7fb5"/>
-        <!-- Collar / shirt -->
-        <path d="M38 38 L45 48 L52 38" fill="#fef3dc" stroke="#e0c89a" stroke-width="1"/>
-        <!-- Arms -->
-        <!-- Left arm (holding book) -->
-        <path d="M28 44 Q14 50 16 62" stroke="#f5c9a0" stroke-width="9" stroke-linecap="round" fill="none"/>
-        <!-- Book in left hand -->
-        <rect x="6" y="58" width="16" height="20" rx="2" fill="#c0392b"/>
-        <rect x="13" y="58" width="1.5" height="20" fill="#922b21"/>
-        <line x1="9" y1="63" x2="12" y2="63" stroke="#fef3dc" stroke-width="1"/>
-        <line x1="9" y1="67" x2="12" y2="67" stroke="#fef3dc" stroke-width="1"/>
-        <!-- Right arm (raised, waving) -->
-        <path d="M62 44 Q74 36 72 26" stroke="#f5c9a0" stroke-width="9" stroke-linecap="round" fill="none"/>
-        <!-- Right hand -->
-        <circle cx="72" cy="24" r="6" fill="#f5c9a0"/>
-        <!-- Head -->
-        <ellipse cx="45" cy="26" rx="18" ry="18" fill="#f5c9a0"/>
-        <!-- Hair -->
-        <path d="M27 22 Q28 4 45 4 Q62 4 63 22 Q58 10 45 10 Q32 10 27 22Z" fill="#3d2b1a"/>
-        <!-- Hair bun -->
-        <circle cx="45" cy="6" r="6" fill="#3d2b1a"/>
-        <!-- Glasses -->
-        <circle cx="38" cy="26" r="6" fill="none" stroke="#5a4a35" stroke-width="1.5"/>
-        <circle cx="52" cy="26" r="6" fill="none" stroke="#5a4a35" stroke-width="1.5"/>
-        <line x1="44" y1="26" x2="46" y2="26" stroke="#5a4a35" stroke-width="1.5"/>
-        <line x1="32" y1="26" x2="28" y2="25" stroke="#5a4a35" stroke-width="1.5"/>
-        <line x1="58" y1="26" x2="62" y2="25" stroke="#5a4a35" stroke-width="1.5"/>
-        <!-- Eyes -->
-        <circle cx="38" cy="26" r="2.5" fill="#2c2018"/>
-        <circle cx="52" cy="26" r="2.5" fill="#2c2018"/>
-        <circle cx="39" cy="25" r="0.8" fill="#fff"/>
-        <circle cx="53" cy="25" r="0.8" fill="#fff"/>
-        <!-- Smile -->
-        <path d="M40 32 Q45 36 50 32" stroke="#c47a5a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-        <!-- Blush -->
-        <ellipse cx="34" cy="30" rx="4" ry="2.5" fill="rgba(220,120,100,0.25)"/>
-        <ellipse cx="56" cy="30" rx="4" ry="2.5" fill="rgba(220,120,100,0.25)"/>
-        <!-- Apron -->
-        <path d="M34 52 Q45 56 56 52 L54 70 Q45 74 36 70 Z" fill="#fef3dc" opacity="0.7"/>
-      </svg>
-    </div>
-  </div>
-
   <!-- NAV -->
   <nav class="nav">
     <span class="nav-title">🏯 吉的堡同安莊敬校員工薪資系統</span>
@@ -722,8 +487,6 @@
         <div class="fs-toolbar">
           <label class="fs-label"><input type="checkbox" id="fscb0" onchange="toggleFS(this)"> 全螢幕</label>
         </div>
-
-        <!-- Login -->
         <div class="login-screen" id="taLogin">
           <div class="login-card">
             <div class="login-deco">🌿 同安校每月工作輸入</div>
@@ -739,24 +502,21 @@
               <input class="login-input" id="taPass" type="password" placeholder="請輸入密碼" autocomplete="current-password">
             </div>
             <div class="login-error" id="taError"></div>
-            <button class="login-btn" onclick="doLoginTA()">登　入</button>
+            <button class="login-btn" onclick="doLoginTA()">登 入</button>
           </div>
         </div>
-
-        <!-- After login: iframe -->
         <div id="taFrame" style="display:none; flex:1; flex-direction:column; min-height:0;">
-          <div style="padding:6px 16px; display:flex; align-items:center; gap:8px; flex-shrink:0;">
-            <span id="taWelcome" style="font-size:13px; color:var(--text-mid); font-weight:600;"></span>
+          <div style="padding:8px 16px; display:flex; align-items:center; gap:8px; flex-shrink:0;">
+            <span id="taWelcome" style="font-size:15px; color:var(--text-mid); font-weight:600;"></span>
             <button class="logout-btn" onclick="doLogoutTA()">登出</button>
           </div>
           <div class="frame-container" style="margin-top:0;">
             <div class="fc-tl frame-corner"></div><div class="fc-tr frame-corner"></div>
             <div class="fc-bl frame-corner"></div><div class="fc-br frame-corner"></div>
-            <div class="loading" id="loader0"><div class="spinner"></div><div class="loading-text">系統載入中…</div></div>
+            <div class="loading" id="loader0"><div class="spinner"></div><div class="loading-text">系統載入中...</div></div>
             <iframe id="taIframe" onload="document.getElementById('loader0').classList.add('done')" allowfullscreen></iframe>
           </div>
         </div>
-
       </div>
 
       <!-- 莊敬校每月工作輸入 -->
@@ -764,8 +524,6 @@
         <div class="fs-toolbar">
           <label class="fs-label"><input type="checkbox" id="fscb1" onchange="toggleFS(this)"> 全螢幕</label>
         </div>
-
-        <!-- Login -->
         <div class="login-screen" id="zjLogin">
           <div class="login-card">
             <div class="login-deco">🏮 莊敬校每月工作輸入</div>
@@ -781,24 +539,21 @@
               <input class="login-input" id="zjPass" type="password" placeholder="請輸入密碼" autocomplete="current-password">
             </div>
             <div class="login-error" id="zjError"></div>
-            <button class="login-btn" onclick="doLoginZJ()">登　入</button>
+            <button class="login-btn" onclick="doLoginZJ()">登 入</button>
           </div>
         </div>
-
-        <!-- After login: iframe -->
         <div id="zjFrame" style="display:none; flex:1; flex-direction:column; min-height:0;">
-          <div style="padding:6px 16px; display:flex; align-items:center; gap:8px; flex-shrink:0;">
-            <span id="zjWelcome" style="font-size:13px; color:var(--text-mid); font-weight:600;"></span>
+          <div style="padding:8px 16px; display:flex; align-items:center; gap:8px; flex-shrink:0;">
+            <span id="zjWelcome" style="font-size:15px; color:var(--text-mid); font-weight:600;"></span>
             <button class="logout-btn" onclick="doLogoutZJ()">登出</button>
           </div>
           <div class="frame-container" style="margin-top:0;">
             <div class="fc-tl frame-corner"></div><div class="fc-tr frame-corner"></div>
             <div class="fc-bl frame-corner"></div><div class="fc-br frame-corner"></div>
-            <div class="loading" id="loader1"><div class="spinner"></div><div class="loading-text">系統載入中…</div></div>
+            <div class="loading" id="loader1"><div class="spinner"></div><div class="loading-text">系統載入中...</div></div>
             <iframe id="zjIframe" onload="document.getElementById('loader1').classList.add('done')" allowfullscreen></iframe>
           </div>
         </div>
-
       </div>
 
       <!-- 同安校後台 -->
@@ -821,13 +576,13 @@
               <input class="login-input" id="adminPass" type="password" placeholder="請輸入密碼" autocomplete="current-password">
             </div>
             <div class="login-error" id="loginError"></div>
-            <button class="login-btn" onclick="doLogin()">登　入</button>
+            <button class="login-btn" onclick="doLogin()">登 入</button>
           </div>
         </div>
         <div class="frame-container" id="adminFrame" style="display:none; flex:1; margin:0 16px 16px;">
           <div class="fc-tl frame-corner"></div><div class="fc-tr frame-corner"></div>
           <div class="fc-bl frame-corner"></div><div class="fc-br frame-corner"></div>
-          <div class="loading" id="loader2"><div class="spinner"></div><div class="loading-text">後台載入中…</div></div>
+          <div class="loading" id="loader2"><div class="spinner"></div><div class="loading-text">後台載入中...</div></div>
           <iframe id="adminIframe" onload="document.getElementById('loader2').classList.add('done')" allowfullscreen></iframe>
         </div>
       </div>
@@ -852,19 +607,16 @@
               <input class="login-input" id="adminPass2" type="password" placeholder="請輸入密碼" autocomplete="current-password">
             </div>
             <div class="login-error" id="loginError2"></div>
-            <button class="login-btn" onclick="doLogin2()">登　入</button>
+            <button class="login-btn" onclick="doLogin2()">登 入</button>
           </div>
         </div>
         <div class="frame-container" id="adminFrame2" style="display:none; flex:1; margin:0 16px 16px;">
           <div class="fc-tl frame-corner"></div><div class="fc-tr frame-corner"></div>
           <div class="fc-bl frame-corner"></div><div class="fc-br frame-corner"></div>
-          <div class="loading" id="loader3"><div class="spinner"></div><div class="loading-text">後台載入中…</div></div>
+          <div class="loading" id="loader3"><div class="spinner"></div><div class="loading-text">後台載入中...</div></div>
           <iframe id="adminIframe2" onload="document.getElementById('loader3').classList.add('done')" allowfullscreen></iframe>
         </div>
       </div>
-
-      <!-- 同安校帳密設定（管理員進入後台後顯示的使用者設定頁） -->
-      <!-- 注意：帳密設定嵌入在後台 iframe 載入後，下方 JS 處理 -->
 
     </div>
   </div>
@@ -873,7 +625,7 @@
   <div class="footer">© 吉的堡托育機構 ・ 員工薪資系統</div>
 
   <script>
-  // ── 儲存帳密（localStorage，各校獨立） ──
+  // ── 儲存帳密（localStorage，各校獨立）──
   const ADMIN_U = 'd8600010', ADMIN_P = 'Shona550505';
   const MAX_USERS = 10;
 
@@ -890,6 +642,15 @@
     document.querySelectorAll('.spanel').forEach((p, j) => p.classList.toggle('active', i === j));
   }
 
+  // ── 自動啟用全螢幕 ──
+  function autoFullscreen(tabIndex) {
+    const cb = document.getElementById('fscb' + tabIndex);
+    if (cb && !cb.checked) {
+      cb.checked = true;
+      toggleFS(cb);
+    }
+  }
+
   // ── 同安校工作輸入 登入 / 登出 ──
   function doLoginTA() {
     const u = document.getElementById('taUser').value.trim();
@@ -904,10 +665,10 @@
       fd.style.display = 'flex';
       document.getElementById('taWelcome').textContent = '👋 歡迎，' + (match.n || u) + roleTag(role);
       const iframe = document.getElementById('taIframe');
-      // 後台或兩者 → 後台 URL；否則 → 輸入 URL
       const src = 'https://script.google.com/macros/s/AKfycbzBHEndqfatexVF5ZgDQDwH8yWJorcxclbtvCSxvXyxZCFDjrNbAHmIPTWzUX322uNr/exec';
       if (!iframe.src || iframe.src === 'about:blank') iframe.src = src;
       err.textContent = '';
+      autoFullscreen(0);
     } else {
       err.textContent = '❌ 帳號或密碼錯誤，請再試一次';
       document.getElementById('taPass').value = '';
@@ -919,8 +680,8 @@
     document.getElementById('taUser').value = '';
     document.getElementById('taPass').value = '';
     document.getElementById('taError').textContent = '';
-    const iframe = document.getElementById('taIframe');
-    iframe.src = 'about:blank';
+    document.getElementById('taIframe').src = 'about:blank';
+    exitFullscreen();
   }
 
   // ── 莊敬校工作輸入 登入 / 登出 ──
@@ -940,6 +701,7 @@
       const src = 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec';
       if (!iframe.src || iframe.src === 'about:blank') iframe.src = src;
       err.textContent = '';
+      autoFullscreen(1);
     } else {
       err.textContent = '❌ 帳號或密碼錯誤，請再試一次';
       document.getElementById('zjPass').value = '';
@@ -951,14 +713,14 @@
     document.getElementById('zjUser').value = '';
     document.getElementById('zjPass').value = '';
     document.getElementById('zjError').textContent = '';
-    const iframe = document.getElementById('zjIframe');
-    iframe.src = 'about:blank';
+    document.getElementById('zjIframe').src = 'about:blank';
+    exitFullscreen();
   }
 
   function roleTag(role) {
-    if (role === 'admin') return '　【後台】';
-    if (role === 'both')  return '　【輸入＋後台】';
-    return '　【工作輸入】';
+    if (role === 'admin') return ' 【後台】';
+    if (role === 'both')  return ' 【輸入+後台】';
+    return ' 【工作輸入】';
   }
 
   // ── 後台：同安校管理員登入 ──
@@ -966,14 +728,12 @@
     const u = document.getElementById('adminUser').value.trim();
     const p = document.getElementById('adminPass').value;
     const err = document.getElementById('loginError');
-    // 超級管理員
     if (u === ADMIN_U && p === ADMIN_P) {
       document.getElementById('adminLogin').style.display = 'none';
       showAdminPanel('ta');
       err.textContent = '';
       return;
     }
-    // 有後台權限的一般使用者
     const users = getUsers('ta');
     const match = users.find(x => x.u === u && x.p === p && (x.role === 'admin' || x.role === 'both'));
     if (match) {
@@ -985,6 +745,7 @@
         iframe.src = 'https://script.google.com/macros/s/AKfycbzBHEndqfatexVF5ZgDQDwH8yWJorcxclbtvCSxvXyxZCFDjrNbAHmIPTWzUX322uNr/exec?page=admin';
       }
       err.textContent = '';
+      autoFullscreen(2);
     } else {
       err.textContent = '❌ 帳號或密碼錯誤，或無後台權限';
       document.getElementById('adminPass').value = '';
@@ -996,14 +757,12 @@
     const u = document.getElementById('adminUser2').value.trim();
     const p = document.getElementById('adminPass2').value;
     const err = document.getElementById('loginError2');
-    // 超級管理員
     if (u === ADMIN_U && p === ADMIN_P) {
       document.getElementById('adminLogin2').style.display = 'none';
       showAdminPanel('zj');
       err.textContent = '';
       return;
     }
-    // 有後台權限的一般使用者
     const users = getUsers('zj');
     const match = users.find(x => x.u === u && x.p === p && (x.role === 'admin' || x.role === 'both'));
     if (match) {
@@ -1015,39 +774,35 @@
         iframe.src = 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec?page=admin';
       }
       err.textContent = '';
+      autoFullscreen(3);
     } else {
       err.textContent = '❌ 帳號或密碼錯誤，或無後台權限';
       document.getElementById('adminPass2').value = '';
     }
   }
 
-  // ── 顯示帳密管理 + 後台 iframe ──
+  // ── 顯示帳密管理（獨立一頁，尚不顯示 iframe）──
   function showAdminPanel(school) {
     const isTA = school === 'ta';
     const frameId = isTA ? 'adminFrame' : 'adminFrame2';
-    const iframeId = isTA ? 'adminIframe' : 'adminIframe2';
-    const loaderId = isTA ? 'loader2' : 'loader3';
-    const src = isTA
-      ? 'https://script.google.com/macros/s/AKfycbzBHEndqfatexVF5ZgDQDwH8yWJorcxclbtvCSxvXyxZCFDjrNbAHmIPTWzUX322uNr/exec?page=admin'
-      : 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec?page=admin';
+    const panelId = isTA ? 'spanel2' : 'spanel3';
+    const container = document.getElementById(panelId);
 
-    const container = document.getElementById(frameId).parentElement;
+    // 隱藏 iframe 區塊
+    document.getElementById(frameId).style.display = 'none';
 
-    // Build user management UI
-    const existingUM = document.getElementById('um_' + school);
-    if (!existingUM) {
-      const um = document.createElement('div');
+    // 建立帳密管理 UI（若尚未建立）
+    let um = document.getElementById('um_' + school);
+    if (!um) {
+      um = document.createElement('div');
       um.id = 'um_' + school;
       um.className = 'user-manage';
+      um.style.flex = '1';
+      um.style.overflowY = 'auto';
       um.innerHTML = buildUMHtml(school);
-      container.insertBefore(um, document.getElementById(frameId));
+      container.appendChild(um);
     }
-
-    // Show iframe
-    const frame = document.getElementById(frameId);
-    frame.style.display = 'flex';
-    const iframe = document.getElementById(iframeId);
-    if (!iframe.src) iframe.src = src;
+    um.style.display = 'block';
   }
 
   function buildUMHtml(school) {
@@ -1061,29 +816,30 @@
       const u = usr.u || '';
       const p = usr.p || '';
       const n = usr.n || '';
-      const roleInput  = usr.role === 'input'  || (!usr.role && false);
-      const roleAdmin  = usr.role === 'admin';
-      const roleBoth   = usr.role === 'both'   || (!usr.role && !!u);
+      const roleInput = usr.role === 'input';
+      const roleAdmin = usr.role === 'admin';
+      const roleBoth  = usr.role === 'both' || (!usr.role && !!u);
       rows += `<div class="um-row">
         <span class="um-num">${i+1}</span>
-        <input class="um-input" id="um_n_${school}_${i}" type="text" placeholder="姓名" value="${n}" style="max-width:80px;">
-        <input class="um-input" id="um_u_${school}_${i}" type="text" placeholder="帳號" value="${u}" style="max-width:100px;">
-        <input class="um-input" id="um_p_${school}_${i}" type="password" placeholder="密碼" value="${p}" style="max-width:100px;">
+        <input class="um-input" id="um_n_${school}_${i}" type="text" placeholder="姓名" value="${n}" style="max-width:90px;">
+        <input class="um-input" id="um_u_${school}_${i}" type="text" placeholder="帳號" value="${u}" style="max-width:110px;">
+        <input class="um-input" id="um_p_${school}_${i}" type="password" placeholder="密碼" value="${p}" style="max-width:110px;">
         <div class="um-perm">
-          <label class="um-perm-label"><input type="radio" name="role_${school}_${i}" id="r_input_${school}_${i}" value="input" ${roleInput?'checked':''}> 輸入</label>
-          <label class="um-perm-label"><input type="radio" name="role_${school}_${i}" id="r_admin_${school}_${i}" value="admin" ${roleAdmin?'checked':''}> 後台</label>
-          <label class="um-perm-label"><input type="radio" name="role_${school}_${i}" id="r_both_${school}_${i}"  value="both"  ${roleBoth?'checked':''}> 兩者</label>
+          <label class="um-perm-label"><input type="radio" name="role_${school}_${i}" value="input" ${roleInput?'checked':''}> 輸入</label>
+          <label class="um-perm-label"><input type="radio" name="role_${school}_${i}" value="admin" ${roleAdmin?'checked':''}> 後台</label>
+          <label class="um-perm-label"><input type="radio" name="role_${school}_${i}" value="both"  ${roleBoth?'checked':''}> 兩者</label>
         </div>
       </div>`;
     }
     return `<div class="um-title">⚙️ ${label} 使用者帳密管理（最多10組）</div>
-      <div style="font-size:11px;color:var(--text-light);margin-bottom:8px;padding-left:30px;">輸入＝每月工作輸入　後台＝後台系統　兩者＝皆可</div>
+      <div style="font-size:13px;color:var(--text-light);margin-bottom:10px;padding-left:30px;">輸入＝每月工作輸入　後台＝後台系統　兩者＝皆可</div>
       ${rows}
       <hr class="um-divider">
-      <button class="um-save-btn ${btnClass}" onclick="saveUM('${school}')">儲　存</button>
+      <button class="um-save-btn ${btnClass}" onclick="saveUM('${school}')">儲 存 並 進 入 後 台</button>
       <div class="um-ok" id="um_ok_${school}"></div>`;
   }
 
+  // ── 儲存帳密 → 切換到後台 iframe ──
   function saveUM(school) {
     const arr = [];
     for (let i = 0; i < MAX_USERS; i++) {
@@ -1095,25 +851,52 @@
       if (u && p) arr.push({ n, u, p, role });
     }
     saveUsers(school, arr);
+
     const ok = document.getElementById('um_ok_' + school);
-    ok.textContent = '✅ 已儲存 ' + arr.length + ' 組帳密';
-    setTimeout(() => { ok.textContent = ''; }, 3000);
+    ok.textContent = '✅ 已儲存 ' + arr.length + ' 組帳密，正在進入後台…';
+
+    setTimeout(() => {
+      const isTA = school === 'ta';
+      const frameId  = isTA ? 'adminFrame'  : 'adminFrame2';
+      const iframeId = isTA ? 'adminIframe' : 'adminIframe2';
+      const tabIndex = isTA ? 2 : 3;
+      const src = isTA
+        ? 'https://script.google.com/macros/s/AKfycbzBHEndqfatexVF5ZgDQDwH8yWJorcxclbtvCSxvXyxZCFDjrNbAHmIPTWzUX322uNr/exec?page=admin'
+        : 'https://script.google.com/macros/s/AKfycbwpAJAJhf_6HKNiTO3iz7GS2keCFkEPjb30CHQllV9iLl1amJbSbpYWUKoHnXC0luNe/exec?page=admin';
+
+      // 隱藏帳密管理
+      const um = document.getElementById('um_' + school);
+      if (um) um.style.display = 'none';
+
+      // 顯示 iframe
+      const frame = document.getElementById(frameId);
+      frame.style.display = 'flex';
+      const iframe = document.getElementById(iframeId);
+      if (!iframe.src || iframe.src === 'about:blank') iframe.src = src;
+
+      // 自動全螢幕
+      autoFullscreen(tabIndex);
+    }, 1200);
   }
 
   // ── 全螢幕 ──
   function toggleFS(cb) {
     const on = cb.checked;
     document.body.classList.toggle('fs-mode', on);
-    // uncheck all other checkboxes
     document.querySelectorAll('.fs-label input[type=checkbox]').forEach(el => {
       if (el !== cb) el.checked = false;
     });
   }
-  // ESC to exit fullscreen
+
+  function exitFullscreen() {
+    document.body.classList.remove('fs-mode');
+    document.querySelectorAll('.fs-label input[type=checkbox]').forEach(el => el.checked = false);
+  }
+
+  // ESC 退出全螢幕 / Enter 登入
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && document.body.classList.contains('fs-mode')) {
-      document.body.classList.remove('fs-mode');
-      document.querySelectorAll('.fs-label input[type=checkbox]').forEach(el => el.checked = false);
+      exitFullscreen();
       return;
     }
     if (e.key !== 'Enter') return;
@@ -1126,6 +909,5 @@
     else if (id === 'spanel3') doLogin2();
   });
   </script>
-
 </body>
 </html>
